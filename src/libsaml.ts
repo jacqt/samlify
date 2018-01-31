@@ -703,10 +703,7 @@ const libSaml = () => {
      */
     async isValidXml(input: string) {
       return new Promise((resolve, reject) => {
-        // https://github.com/albanm/node-libxml-xsd/issues/11
-        const currentDirectory = path.resolve('');
-        process.chdir(path.resolve(__dirname, '../schemas'));
-        xsd.parseFile(path.resolve('saml-schema-protocol-2.0.xsd'), (err, schema) => {
+        xsd.parseFile(path.resolve(__dirname, '../schemas/saml-schema-protocol-2.0.xsd'), (err, schema) => {
           if (err) {
             return reject(err.message);
           }
