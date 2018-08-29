@@ -110,8 +110,8 @@ var SpMetadata = /** @class */ (function (_super) {
             var existedElements = elementsOrder.filter(function (name) { return utility_1.isNonEmptyArray(descriptors_1[name]); });
             existedElements.forEach(function (name) {
                 descriptors_1[name].forEach(function (e) {
-                    return SPSSODescriptor_1.push((_a = {}, _a[name] = e, _a));
                     var _a;
+                    return SPSSODescriptor_1.push((_a = {}, _a[name] = e, _a));
                 });
             });
             // Re-assign the meta reference as a XML string|Buffer for use with the parent constructor

@@ -19,8 +19,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -410,13 +410,18 @@ var libSaml = function () {
                         metadataCert = lodash_1.flattenDeep(metadataCert);
                     }
                     metadataCert = metadataCert.map(utility_1.default.normalizeCerString);
-                    var x509Certificate = xpath_1.select(".//*[local-name(.)='X509Certificate']", s)[0].firstChild.data;
-                    x509Certificate = utility_1.default.normalizeCerString(x509Certificate);
-                    if (lodash_1.includes(metadataCert, x509Certificate)) {
-                        selectedCert = x509Certificate;
+                    var x509CertificateData = xpath_1.select(".//*[local-name(.)='X509Certificate']", s)[0];
+                    if (x509CertificateData) {
+                        var x509Certificate = utility_1.default.normalizeCerString(x509CertificateData.firstChild.data);
+                        if (lodash_1.includes(metadataCert, x509Certificate)) {
+                            selectedCert = x509Certificate;
+                        }
+                        else {
+                            throw new Error('certificate in document is not matched those specified in metadata');
+                        }
                     }
-                    if (selectedCert === '') {
-                        throw new Error('certificate in document is not matched those specified in metadata');
+                    else {
+                        selectedCert = metadataCert[0];
                     }
                     sig.keyInfoProvider = new _this.getKeyInfo(selectedCert);
                 }
