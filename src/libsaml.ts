@@ -478,13 +478,16 @@ const libSaml = () => {
             metadataCert = flattenDeep(metadataCert);
           }
           metadataCert = metadataCert.map(utility.normalizeCerString);
-          let x509Certificate = select(".//*[local-name(.)='X509Certificate']", s)[0].firstChild.data;
-          x509Certificate = utility.normalizeCerString(x509Certificate);
-          if (includes(metadataCert, x509Certificate)) {
-            selectedCert = x509Certificate;
-          }
-          if (selectedCert === '') {
-            throw new Error('certificate in document is not matched those specified in metadata');
+          const x509CertificateData = select(".//*[local-name(.)='X509Certificate']", s)[0];
+          if (x509CertificateData) {
+            const x509Certificate = utility.normalizeCerString(x509CertificateData.firstChild.data);
+            if (includes(metadataCert, x509Certificate)) {
+              selectedCert = x509Certificate;
+            } else {
+              throw new Error('certificate in document is not matched those specified in metadata');
+            }
+          } else {
+            selectedCert = metadataCert[0];
           }
           sig.keyInfoProvider = new this.getKeyInfo(selectedCert);
         } else {
