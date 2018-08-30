@@ -463,7 +463,7 @@ const libSaml = () => {
       }
       const sig = new SignedXml();
       let res = true;
-      // xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
+      const replacedXml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
       selection.forEach(s => {
         let selectedCert = '';
         sig.signatureAlgorithm = opts.signatureAlgorithm;
@@ -494,7 +494,7 @@ const libSaml = () => {
           throw new Error('undefined certificate in \'opts\' object');
         }
         sig.loadSignature(s);
-        res = res && sig.checkSignature(xml);
+        res = res && (sig.checkSignature(xml) || sig.checkSignature(replacedXml));
       });
       return res;
     },
