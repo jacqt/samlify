@@ -393,7 +393,7 @@ var libSaml = function () {
             }
             var sig = new xml_crypto_1.SignedXml();
             var res = true;
-            xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
+            // xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
             selection.forEach(function (s) {
                 var selectedCert = '';
                 sig.signatureAlgorithm = opts.signatureAlgorithm;
