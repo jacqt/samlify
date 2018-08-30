@@ -393,7 +393,7 @@ var libSaml = function () {
             }
             var sig = new xml_crypto_1.SignedXml();
             var res = true;
-            // xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
+            var replacedXml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
             selection.forEach(function (s) {
                 var selectedCert = '';
                 sig.signatureAlgorithm = opts.signatureAlgorithm;
@@ -429,7 +429,7 @@ var libSaml = function () {
                     throw new Error('undefined certificate in \'opts\' object');
                 }
                 sig.loadSignature(s);
-                res = res && sig.checkSignature(xml);
+                res = res && (sig.checkSignature(xml) || sig.checkSignature(replacedXml));
             });
             return res;
         },
