@@ -463,7 +463,7 @@ const libSaml = () => {
       }
       const sig = new SignedXml();
       let res = true;
-      xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
+      // xml = xml.replace(/<ds:Signature(.*?)>(.*?)<\/(.*?)ds:Signature>/g, '');
       selection.forEach(s => {
         let selectedCert = '';
         sig.signatureAlgorithm = opts.signatureAlgorithm;
